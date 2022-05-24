@@ -1,12 +1,13 @@
 package nl.han.goran.inger.bp.scenes;
 
-import com.github.hanyaeger.api.AnchorPoint;
 import com.github.hanyaeger.api.Coordinate2D;
+import com.github.hanyaeger.api.EntitySpawnerContainer;
 import com.github.hanyaeger.api.scenes.DynamicScene;
-import nl.han.goran.inger.bp.entities.Kometen;
 import nl.han.goran.inger.bp.entities.PlayerSpaceship;
+import nl.han.goran.inger.bp.entities.spawner.GroteKometenSpawner;
+import nl.han.goran.inger.bp.entities.spawner.KleineKometenSpawner;
 
-public class GameScene extends DynamicScene {
+public class GameScene extends DynamicScene implements EntitySpawnerContainer {
     public double xPlayerLocationInScene;
     public double yPlayerLocationInScene;
     public void setupScene() {
@@ -14,11 +15,9 @@ public class GameScene extends DynamicScene {
     }
 
     public void setupEntities() {
-        var groteKometen = new Kometen(new Coordinate2D(70, 430));
 
         var playerSpaceship = new PlayerSpaceship(new Coordinate2D(0, getHeight() / 2), this);
 
-        addEntity(groteKometen);
         addEntity(playerSpaceship);
     }
 
@@ -36,5 +35,11 @@ public class GameScene extends DynamicScene {
 
     public double getyPlayerLocationInScene() {
         return yPlayerLocationInScene;
+    }
+
+    @Override
+    public void setupEntitySpawners() {
+        addEntitySpawner(new KleineKometenSpawner(getWidth(), getHeight()));
+        addEntitySpawner(new GroteKometenSpawner(getWidth(), getHeight() / 2));
     }
 }
