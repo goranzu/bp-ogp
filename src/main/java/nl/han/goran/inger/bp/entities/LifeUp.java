@@ -8,4 +8,11 @@ public class LifeUp extends PowerUp {
         super(initialLocation, radius);
         setFill(Color.BLUE);
     }
+
+    @Override
+    public void handleRemove() {
+        if (getTicks() > getLiveForInMs()) {
+            remove();
+        }
+    }
 }
