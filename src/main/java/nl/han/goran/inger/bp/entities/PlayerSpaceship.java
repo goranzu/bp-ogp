@@ -2,6 +2,8 @@ package nl.han.goran.inger.bp.entities;
 
 import com.github.hanyaeger.api.Coordinate2D;
 import com.github.hanyaeger.api.Size;
+import com.github.hanyaeger.api.entities.Collided;
+import com.github.hanyaeger.api.entities.Collider;
 import com.github.hanyaeger.api.entities.Direction;
 import com.github.hanyaeger.api.entities.SceneBorderCrossingWatcher;
 import com.github.hanyaeger.api.entities.impl.DynamicSpriteEntity;
@@ -13,7 +15,7 @@ import nl.han.goran.inger.bp.scenes.GameScene;
 
 import java.util.Set;
 
-public class PlayerSpaceship extends DynamicSpriteEntity implements KeyListener, SceneBorderCrossingWatcher {
+public class PlayerSpaceship extends DynamicSpriteEntity implements KeyListener, SceneBorderCrossingWatcher, Collider, Collided {
     //    TODO: gebruik de andere player sprites wanneer het ship omhoog of omlaag gaat.
     //    FIXME: er is een bug als de volgende toetsen worden ingedrukt: space + up + left
     final GameScene gameScene;
@@ -114,5 +116,10 @@ public class PlayerSpaceship extends DynamicSpriteEntity implements KeyListener,
             case LEFT -> setAnchorLocationX(1);
             case RIGHT -> setAnchorLocationX(getSceneWidth() - getWidth() - 1);
         }
+    }
+
+    @Override
+    public void onCollision(Collider collider) {
+
     }
 }
