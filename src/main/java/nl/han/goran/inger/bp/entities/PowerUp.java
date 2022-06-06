@@ -13,7 +13,6 @@ Er worden alleen instances gemaakt van classen die overerven van deze class.
  */
 public abstract class PowerUp extends DynamicCircleEntity implements Collided, Collider, UpdateExposer {
     private int ticks = 0;
-    final int liveForInMs = 350;
 
     public PowerUp(Coordinate2D initialLocation, int radius) {
         super(initialLocation);
@@ -46,9 +45,5 @@ public abstract class PowerUp extends DynamicCircleEntity implements Collided, C
 
     public void setTicks(int ticks) {
         this.ticks = ticks;
-    }
-
-    public int getLiveForInMs() {
-        return this.liveForInMs;
     }
 }
