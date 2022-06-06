@@ -40,7 +40,7 @@ public class PlayerSpaceship extends DynamicSpriteEntity implements KeyListener,
         gameScene.setyPlayerLocationInScene(getLocationInScene().getY());
 
         var speed = 7;
-//        System.out.println(set);
+        System.out.println(gameScene.getPlayerLives());
         if (set.contains(KeyCode.RIGHT) && set.contains(KeyCode.UP)) {
             setMotion(speed, 135d);
             if (set.contains(KeyCode.SPACE)) {
@@ -57,7 +57,6 @@ public class PlayerSpaceship extends DynamicSpriteEntity implements KeyListener,
             }
         } else if (set.contains(KeyCode.LEFT) && set.contains(KeyCode.UP)) {
             setMotion(speed, 225d);
-            System.out.println(set);
             if (set.contains(KeyCode.SPACE)) {
                 setCurrentFrameIndex(5);
             } else {
@@ -120,6 +119,10 @@ public class PlayerSpaceship extends DynamicSpriteEntity implements KeyListener,
 
     @Override
     public void onCollision(Collider collider) {
-
+        if(collider instanceof LifeUp) {
+            var newPlayerLives = gameScene.getPlayerLives() + 1;
+            gameScene.setPlayerLives(newPlayerLives);
+            livesText.setLivesText(newPlayerLives);
+        }
     }
 }

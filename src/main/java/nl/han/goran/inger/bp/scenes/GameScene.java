@@ -6,12 +6,13 @@ import com.github.hanyaeger.api.scenes.DynamicScene;
 import nl.han.goran.inger.bp.entities.PlayerSpaceship;
 import nl.han.goran.inger.bp.entities.spawner.GroteKometenSpawner;
 import nl.han.goran.inger.bp.entities.spawner.KleineKometenSpawner;
+import nl.han.goran.inger.bp.entities.spawner.LifeUpSpawner;
 import nl.han.goran.inger.bp.entities.text.LivesText;
 
 public class GameScene extends DynamicScene implements EntitySpawnerContainer {
-    public double xPlayerLocationInScene;
-    public double yPlayerLocationInScene;
-    private int playerLives = 1;
+    protected double xPlayerLocationInScene;
+    protected double yPlayerLocationInScene;
+    protected int playerLives = 1;
 
     public void setupScene() {
         setBackgroundImage("background/bg-preview-big.png", true);
@@ -40,9 +41,23 @@ public class GameScene extends DynamicScene implements EntitySpawnerContainer {
         return yPlayerLocationInScene;
     }
 
+    public int getPlayerLives() {
+        return this.playerLives;
+    }
+
+    public void setPlayerLives(int playerLives) {
+       this.playerLives = playerLives;
+    }
+
+
+
     @Override
     public void setupEntitySpawners() {
-        addEntitySpawner(new KleineKometenSpawner(getWidth(), getHeight()));
-        addEntitySpawner(new GroteKometenSpawner(getWidth(), getHeight() / 2));
+        var sceneWidth = getWidth();
+        var sceneHeight = getHeight();
+        var lifeUpSpawner = new LifeUpSpawner(sceneWidth, sceneHeight);
+        addEntitySpawner(lifeUpSpawner);
+        addEntitySpawner(new KleineKometenSpawner(sceneWidth, sceneHeight));
+        addEntitySpawner(new GroteKometenSpawner(sceneWidth, sceneHeight / 2));
     }
 }
