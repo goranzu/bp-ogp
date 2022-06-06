@@ -6,7 +6,7 @@ import com.github.hanyaeger.api.scenes.DynamicScene;
 import nl.han.goran.inger.bp.entities.PlayerSpaceship;
 import nl.han.goran.inger.bp.entities.spawner.GroteKometenSpawner;
 import nl.han.goran.inger.bp.entities.spawner.KleineKometenSpawner;
-import nl.han.goran.inger.bp.entities.spawner.LifeUpSpawner;
+import nl.han.goran.inger.bp.entities.spawner.PowerUpSpawner;
 import nl.han.goran.inger.bp.entities.text.LivesText;
 
 public class GameScene extends DynamicScene implements EntitySpawnerContainer {
@@ -55,8 +55,8 @@ public class GameScene extends DynamicScene implements EntitySpawnerContainer {
     public void setupEntitySpawners() {
         var sceneWidth = getWidth();
         var sceneHeight = getHeight();
-        var lifeUpSpawner = new LifeUpSpawner(sceneWidth, sceneHeight);
-        addEntitySpawner(lifeUpSpawner);
+        var powerUpSpawner = new PowerUpSpawner(sceneWidth, sceneHeight);
+        addEntitySpawner(powerUpSpawner);
         addEntitySpawner(new KleineKometenSpawner(sceneWidth, sceneHeight));
         addEntitySpawner(new GroteKometenSpawner(sceneWidth, sceneHeight / 2));
     }

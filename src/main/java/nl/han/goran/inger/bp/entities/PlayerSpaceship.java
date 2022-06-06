@@ -22,6 +22,8 @@ public class PlayerSpaceship extends DynamicSpriteEntity implements KeyListener,
     private int playerLives;
     private LivesText livesText;
 
+    private int playerSpeed = 7;
+
     public PlayerSpaceship(Coordinate2D initialLocation, GameScene gameScene, int playerLives, LivesText livesText) {
         // de resource en size in deze class en de StartScreenPlayer class zijn hetzelfde...
         // overerving gebruiken?
@@ -32,15 +34,28 @@ public class PlayerSpaceship extends DynamicSpriteEntity implements KeyListener,
 
         this.livesText = livesText;
         this.livesText.setLivesText(this.playerLives);
+
+        setSpeed(this.playerSpeed);
     }
+
+    public int getPlayerSpeed() {
+        return playerSpeed;
+    }
+
+    public void setPlayerSpeed(int playerSpeed) {
+        this.playerSpeed = playerSpeed;
+    }
+
 
     @Override
     public void onPressedKeysChange(Set<KeyCode> set) {
         gameScene.setxPlayerLocationInScene(getLocationInScene().getX());
         gameScene.setyPlayerLocationInScene(getLocationInScene().getY());
 
-        var speed = 7;
-        System.out.println(gameScene.getPlayerLives());
+        var speed = this.getPlayerSpeed();
+
+//        setSpeed(speed);
+
         if (set.contains(KeyCode.RIGHT) && set.contains(KeyCode.UP)) {
             setMotion(speed, 135d);
             if (set.contains(KeyCode.SPACE)) {
@@ -119,10 +134,15 @@ public class PlayerSpaceship extends DynamicSpriteEntity implements KeyListener,
 
     @Override
     public void onCollision(Collider collider) {
-        if(collider instanceof LifeUp) {
+        if (collider instanceof LifeUp) {
             var newPlayerLives = gameScene.getPlayerLives() + 1;
             gameScene.setPlayerLives(newPlayerLives);
             livesText.setLivesText(newPlayerLives);
+        }
+
+        if (collider instanceof SpeedUp) {
+            setPlayerSpeed(getPlayerSpeed() + 2);
+            System.out.println(getPlayerSpeed());
         }
     }
 }
