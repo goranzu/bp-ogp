@@ -2,36 +2,60 @@ package nl.han.goran.inger.bp.entities;
 
 import com.github.hanyaeger.api.Coordinate2D;
 import com.github.hanyaeger.api.Size;
+import com.github.hanyaeger.api.entities.Collided;
+import com.github.hanyaeger.api.entities.Collider;
 import com.github.hanyaeger.api.entities.Direction;
 import com.github.hanyaeger.api.entities.SceneBorderCrossingWatcher;
 import com.github.hanyaeger.api.entities.impl.DynamicSpriteEntity;
 import com.github.hanyaeger.api.scenes.SceneBorder;
 import com.github.hanyaeger.api.userinput.KeyListener;
 import javafx.scene.input.KeyCode;
+import nl.han.goran.inger.bp.entities.text.LivesText;
 import nl.han.goran.inger.bp.scenes.GameScene;
 
 import java.util.Set;
 
-public class PlayerSpaceship extends DynamicSpriteEntity implements KeyListener, SceneBorderCrossingWatcher {
+public class PlayerSpaceship extends DynamicSpriteEntity implements KeyListener, SceneBorderCrossingWatcher, Collider, Collided {
     //    TODO: gebruik de andere player sprites wanneer het ship omhoog of omlaag gaat.
     //    FIXME: er is een bug als de volgende toetsen worden ingedrukt: space + up + left
     final GameScene gameScene;
-    private int lives = 3;
+    private int playerLives;
+    private LivesText livesText;
 
-    public PlayerSpaceship(Coordinate2D initialLocation, GameScene gameScene) {
+    private int playerSpeed = 7;
+
+    public PlayerSpaceship(Coordinate2D initialLocation, GameScene gameScene, int playerLives, LivesText livesText) {
         // de resource en size in deze class en de StartScreenPlayer class zijn hetzelfde...
         // overerving gebruiken?
         super("player/player_sprite_sheet.png", initialLocation, new Size(74, 42), 1, 6);
         this.gameScene = gameScene;
+
+        this.playerLives = playerLives;
+
+        this.livesText = livesText;
+        this.livesText.setLivesText(this.playerLives);
+
+        setSpeed(this.playerSpeed);
     }
+
+    public int getPlayerSpeed() {
+        return playerSpeed;
+    }
+
+    public void setPlayerSpeed(int playerSpeed) {
+        this.playerSpeed = playerSpeed;
+    }
+
 
     @Override
     public void onPressedKeysChange(Set<KeyCode> set) {
         gameScene.setxPlayerLocationInScene(getLocationInScene().getX());
         gameScene.setyPlayerLocationInScene(getLocationInScene().getY());
 
-        var speed = 7;
-//        System.out.println(set);
+        var speed = this.getPlayerSpeed();
+
+//        setSpeed(speed);
+
         if (set.contains(KeyCode.RIGHT) && set.contains(KeyCode.UP)) {
             setMotion(speed, 135d);
             if (set.contains(KeyCode.SPACE)) {
@@ -48,7 +72,6 @@ public class PlayerSpaceship extends DynamicSpriteEntity implements KeyListener,
             }
         } else if (set.contains(KeyCode.LEFT) && set.contains(KeyCode.UP)) {
             setMotion(speed, 225d);
-            System.out.println(set);
             if (set.contains(KeyCode.SPACE)) {
                 setCurrentFrameIndex(5);
             } else {
@@ -101,10 +124,25 @@ public class PlayerSpaceship extends DynamicSpriteEntity implements KeyListener,
     @Override
     public void notifyBoundaryCrossing(SceneBorder sceneBorder) {
         switch (sceneBorder) {
-            case TOP -> setAnchorLocationY(1);
+//            case TOP -> setAnchorLocationY(1);
+            case TOP -> changeDirection(90);
             case BOTTOM -> setAnchorLocationY(getSceneHeight() - getHeight() - 1);
             case LEFT -> setAnchorLocationX(1);
             case RIGHT -> setAnchorLocationX(getSceneWidth() - getWidth() - 1);
+        }
+    }
+
+    @Override
+    public void onCollision(Collider collider) {
+        if (collider instanceof LifeUp) {
+            var newPlayerLives = gameScene.getPlayerLives() + 1;
+            gameScene.setPlayerLives(newPlayerLives);
+            livesText.setLivesText(newPlayerLives);
+        }
+
+        if (collider instanceof SpeedUp) {
+            setPlayerSpeed(getPlayerSpeed() + 2);
+            System.out.println(getPlayerSpeed());
         }
     }
 }
