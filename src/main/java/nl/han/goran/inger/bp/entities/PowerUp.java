@@ -4,19 +4,31 @@ import com.github.hanyaeger.api.Coordinate2D;
 import com.github.hanyaeger.api.UpdateExposer;
 import com.github.hanyaeger.api.entities.Collided;
 import com.github.hanyaeger.api.entities.Collider;
+import com.github.hanyaeger.api.entities.Direction;
+import com.github.hanyaeger.api.entities.SceneBorderCrossingWatcher;
 import com.github.hanyaeger.api.entities.impl.DynamicCircleEntity;
+import com.github.hanyaeger.api.scenes.SceneBorder;
 
-/*
-Ik heb hier een abstract class van gemaakt omdat er nooit een
-instance van deze class gemaakt mag worden.
-Er worden alleen instances gemaakt van classen die overerven van deze class.
+import java.util.Random;
+
+/**
+ * Base class voor LifeUp en SpeedUp
+ *
+ * @author Goran Tenic
+ * @version 1.0.0
  */
-public abstract class PowerUp extends DynamicCircleEntity implements Collided, Collider, UpdateExposer {
+public class PowerUp extends DynamicCircleEntity implements Collided, Collider, UpdateExposer, SceneBorderCrossingWatcher {
     private int ticks = 0;
 
     public PowerUp(Coordinate2D initialLocation, int radius) {
         super(initialLocation);
         setRadius(radius);
+
+        Direction[] options = {Direction.RIGHT, Direction.LEFT, Direction.UP, Direction.DOWN};
+        var randomInt = new Random().nextInt(options.length);
+
+        setSpeed(2);
+        setDirection(options[randomInt]);
     }
 
     @Override
@@ -36,8 +48,17 @@ public abstract class PowerUp extends DynamicCircleEntity implements Collided, C
         this.handleRemove();
     }
 
-    // Vraag of gebruik van abstract methodes polymorfisme is.
-    public abstract void handleRemove();
+    /**
+     * Methode die bepaalt na hoeveel ticks het
+     * element verwijdert wordt.
+     *
+     * @author Goran Tenic
+     */
+    public void handleRemove() {
+        if (getTicks() > 350) {
+            remove();
+        }
+    }
 
     public int getTicks() {
         return this.ticks;
@@ -45,5 +66,12 @@ public abstract class PowerUp extends DynamicCircleEntity implements Collided, C
 
     public void setTicks(int ticks) {
         this.ticks = ticks;
+    }
+
+    @Override
+    public void notifyBoundaryCrossing(SceneBorder sceneBorder) {
+        if (SceneBorder.BOTTOM.equals(sceneBorder) || SceneBorder.TOP.equals(sceneBorder) || SceneBorder.LEFT.equals(sceneBorder) || SceneBorder.RIGHT.equals(sceneBorder)) {
+            remove();
+        }
     }
 }
