@@ -15,16 +15,4 @@ public class LifeUp extends PowerUp {
         super(initialLocation, radius);
         setFill(Color.BLUE);
     }
-
-    /**
-     * Na 350 GWU updates wordt deze element verwijdert.
-     *
-     * @author Goran Tenic
-     */
-    @Override
-    public void handleRemove() {
-        if (getTicks() > 350) {
-            remove();
-        }
-    }
 }
