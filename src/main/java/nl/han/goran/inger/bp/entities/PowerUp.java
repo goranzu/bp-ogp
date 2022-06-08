@@ -17,7 +17,7 @@ import java.util.Random;
  * @author Goran Tenic
  * @version 1.0.0
  */
-public class PowerUp extends DynamicCircleEntity implements Collided, Collider, UpdateExposer, SceneBorderCrossingWatcher {
+public abstract class PowerUp extends DynamicCircleEntity implements Collided, Collider, UpdateExposer, SceneBorderCrossingWatcher {
     private int ticks = 0;
 
     public PowerUp(Coordinate2D initialLocation, int radius) {
@@ -49,13 +49,16 @@ public class PowerUp extends DynamicCircleEntity implements Collided, Collider, 
     }
 
     /**
-     * Methode die bepaalt na hoeveel ticks het
+     * Abstracte methode die bepaalt na hoeveel ticks het
      * element verwijdert wordt.
      *
      * @author Goran Tenic
      */
-    public void handleRemove() {
-        if (getTicks() > 350) {
+    abstract public void handleRemove();
+
+    @Override
+    public void notifyBoundaryCrossing(SceneBorder sceneBorder) {
+        if (SceneBorder.BOTTOM.equals(sceneBorder) || SceneBorder.TOP.equals(sceneBorder) || SceneBorder.LEFT.equals(sceneBorder) || SceneBorder.RIGHT.equals(sceneBorder)) {
             remove();
         }
     }
@@ -68,10 +71,4 @@ public class PowerUp extends DynamicCircleEntity implements Collided, Collider, 
         this.ticks = ticks;
     }
 
-    @Override
-    public void notifyBoundaryCrossing(SceneBorder sceneBorder) {
-        if (SceneBorder.BOTTOM.equals(sceneBorder) || SceneBorder.TOP.equals(sceneBorder) || SceneBorder.LEFT.equals(sceneBorder) || SceneBorder.RIGHT.equals(sceneBorder)) {
-            remove();
-        }
-    }
 }

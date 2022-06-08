@@ -11,8 +11,15 @@ import javafx.scene.paint.Color;
  * @version 1.0.0
  */
 public class LifeUp extends PowerUp {
+    int howManyTicks = 100;
     public LifeUp(Coordinate2D initialLocation, int radius) {
         super(initialLocation, radius);
         setFill(Color.BLUE);
+    }
+
+    public void handleRemove() {
+        if (getTicks() > this.howManyTicks) {
+            remove();
+        }
     }
 }

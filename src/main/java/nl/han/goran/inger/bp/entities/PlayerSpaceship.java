@@ -142,7 +142,6 @@ public class PlayerSpaceship extends DynamicSpriteEntity implements KeyListener,
 
         if (collider instanceof SpeedUp) {
             setPlayerSpeed(getPlayerSpeed() + 2);
-            System.out.println(getPlayerSpeed());
         }
     }
 }
