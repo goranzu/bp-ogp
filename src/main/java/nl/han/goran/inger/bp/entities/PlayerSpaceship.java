@@ -113,6 +113,11 @@ public class PlayerSpaceship extends DynamicSpriteEntity implements KeyListener,
                 setCurrentFrameIndex(1);
             }
         } else if (set.contains(KeyCode.SPACE)) {
+            /*
+            ik wil hier een instance van een bullet maken
+            en deze aan de scene toevoegen. als dat kan
+            var bullet = new Bullet(new Coordinate2D(gameScene.getxPlayerLocationInScene(), gameScene.getyPlayerLocationInScene()));
+             */
             setCurrentFrameIndex(3);
             setSpeed(0);
         } else {
