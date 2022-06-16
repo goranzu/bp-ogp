@@ -68,7 +68,7 @@ public class GameScene extends DynamicScene implements EntitySpawnerContainer {
         var sceneHeight = getHeight();
         var powerUpSpawner = new PowerUpSpawner(sceneWidth, sceneHeight);
         addEntitySpawner(powerUpSpawner);
-        addEntitySpawner(new KleineKometenSpawner(sceneWidth, sceneHeight));
-        addEntitySpawner(new GroteKometenSpawner(sceneWidth, sceneHeight / 2));
+//        addEntitySpawner(new KleineKometenSpawner(sceneWidth, sceneHeight));
+//        addEntitySpawner(new GroteKometenSpawner(sceneWidth, sceneHeight / 2));
     }
 }
