@@ -2,13 +2,15 @@ package nl.han.goran.inger.bp.entities;
 
 import com.github.hanyaeger.api.Coordinate2D;
 import com.github.hanyaeger.api.Size;
+import com.github.hanyaeger.api.entities.Collided;
+import com.github.hanyaeger.api.entities.Collider;
 import com.github.hanyaeger.api.entities.Direction;
 import com.github.hanyaeger.api.entities.SceneBorderCrossingWatcher;
 import com.github.hanyaeger.api.entities.impl.DynamicSpriteEntity;
 import com.github.hanyaeger.api.scenes.SceneBorder;
 
-public class Bullet extends DynamicSpriteEntity implements SceneBorderCrossingWatcher {
-    public Bullet(Coordinate2D initialLocation, int speed) {
+public class Projectile extends DynamicSpriteEntity implements SceneBorderCrossingWatcher, Collided, Collider {
+    public Projectile(Coordinate2D initialLocation, int speed) {
         super("shoot/shoot1.png", initialLocation, new Size(28, 28));
 
         setMotion(speed + 2, Direction.RIGHT);
@@ -19,5 +21,14 @@ public class Bullet extends DynamicSpriteEntity implements SceneBorderCrossingWa
         if (SceneBorder.RIGHT.equals(sceneBorder)) {
             remove();
         }
+    }
+
+    /**
+     * TODO: handle collisions
+     * @param collider
+     */
+    @Override
+    public void onCollision(Collider collider) {
+
     }
 }
