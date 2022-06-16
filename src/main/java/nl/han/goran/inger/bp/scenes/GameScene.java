@@ -2,8 +2,8 @@ package nl.han.goran.inger.bp.scenes;
 
 import com.github.hanyaeger.api.Coordinate2D;
 import com.github.hanyaeger.api.EntitySpawnerContainer;
+import com.github.hanyaeger.api.entities.YaegerEntity;
 import com.github.hanyaeger.api.scenes.DynamicScene;
-import nl.han.goran.inger.bp.entities.Bullet;
 import nl.han.goran.inger.bp.entities.PlayerSpaceship;
 import nl.han.goran.inger.bp.entities.spawner.GroteKometenSpawner;
 import nl.han.goran.inger.bp.entities.spawner.KleineKometenSpawner;
@@ -22,10 +22,19 @@ public class GameScene extends DynamicScene implements EntitySpawnerContainer {
     public void setupEntities() {
         var livesText = new LivesText(new Coordinate2D(0, 0));
         var playerSpaceship = new PlayerSpaceship(new Coordinate2D(0, getHeight() / 2), this, this.playerLives, livesText);
-        var bullet = new Bullet(new Coordinate2D(0, 200));
         addEntity(playerSpaceship);
         addEntity(livesText);
-        addEntity(bullet);
+    }
+
+    /**
+     * Ik override deze methode en maak hem public zodat de addEntity methode beschikbaar
+     * is in de PlayerSpaceShip class.
+     *
+     * @param yaegerEntity
+     */
+    @Override
+    public void addEntity(YaegerEntity yaegerEntity) {
+        super.addEntity(yaegerEntity);
     }
 
     public double getxPlayerLocationInScene() {
@@ -49,9 +58,8 @@ public class GameScene extends DynamicScene implements EntitySpawnerContainer {
     }
 
     public void setPlayerLives(int playerLives) {
-       this.playerLives = playerLives;
+        this.playerLives = playerLives;
     }
-
 
 
     @Override
