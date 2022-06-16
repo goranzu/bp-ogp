@@ -56,6 +56,12 @@ public class PlayerSpaceship extends DynamicSpriteEntity implements KeyListener,
 
 //        setSpeed(speed);
 
+        if (set.contains(KeyCode.SPACE)) {
+            gameScene.addEntity(new Bullet(getAnchorLocation(), getPlayerSpeed()));
+            setCurrentFrameIndex(3);
+            setSpeed(0);
+        }
+
         if (set.contains(KeyCode.RIGHT) && set.contains(KeyCode.UP)) {
             setMotion(speed, 135d);
             if (set.contains(KeyCode.SPACE)) {
@@ -112,9 +118,6 @@ public class PlayerSpaceship extends DynamicSpriteEntity implements KeyListener,
             } else {
                 setCurrentFrameIndex(1);
             }
-        } else if (set.contains(KeyCode.SPACE)) {
-            setCurrentFrameIndex(3);
-            setSpeed(0);
         } else {
             setSpeed(0);
             setCurrentFrameIndex(0);
