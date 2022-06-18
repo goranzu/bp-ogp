@@ -5,14 +5,10 @@ import com.github.hanyaeger.api.EntitySpawnerContainer;
 import com.github.hanyaeger.api.entities.YaegerEntity;
 import com.github.hanyaeger.api.scenes.DynamicScene;
 import nl.han.goran.inger.bp.entities.PlayerSpaceship;
-import nl.han.goran.inger.bp.entities.spawner.GroteKometenSpawner;
-import nl.han.goran.inger.bp.entities.spawner.KleineKometenSpawner;
 import nl.han.goran.inger.bp.entities.spawner.PowerUpSpawner;
 import nl.han.goran.inger.bp.entities.text.LivesText;
 
 public class GameScene extends DynamicScene implements EntitySpawnerContainer {
-    protected double xPlayerLocationInScene;
-    protected double yPlayerLocationInScene;
     protected int playerLives = 1;
 
     public void setupScene() {
@@ -37,22 +33,6 @@ public class GameScene extends DynamicScene implements EntitySpawnerContainer {
         super.addEntity(yaegerEntity);
     }
 
-    public double getxPlayerLocationInScene() {
-        return xPlayerLocationInScene;
-    }
-
-    public void setxPlayerLocationInScene(double xPlayerLocationInScene) {
-        this.xPlayerLocationInScene = xPlayerLocationInScene;
-    }
-
-    public void setyPlayerLocationInScene(double yPlayerLocationInScene) {
-        this.yPlayerLocationInScene = yPlayerLocationInScene;
-    }
-
-    public double getyPlayerLocationInScene() {
-        return yPlayerLocationInScene;
-    }
-
     public int getPlayerLives() {
         return this.playerLives;
     }
@@ -68,7 +48,5 @@ public class GameScene extends DynamicScene implements EntitySpawnerContainer {
         var sceneHeight = getHeight();
         var powerUpSpawner = new PowerUpSpawner(sceneWidth, sceneHeight);
         addEntitySpawner(powerUpSpawner);
-//        addEntitySpawner(new KleineKometenSpawner(sceneWidth, sceneHeight));
-//        addEntitySpawner(new GroteKometenSpawner(sceneWidth, sceneHeight / 2));
     }
 }

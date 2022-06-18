@@ -49,9 +49,6 @@ public class PlayerSpaceship extends DynamicSpriteEntity implements KeyListener,
 
     @Override
     public void onPressedKeysChange(Set<KeyCode> set) {
-        gameScene.setxPlayerLocationInScene(getLocationInScene().getX());
-        gameScene.setyPlayerLocationInScene(getLocationInScene().getY());
-
         var speed = this.getPlayerSpeed();
 
         final double RIGHT_UP = 135d;

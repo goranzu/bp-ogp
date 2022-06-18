@@ -20,7 +20,7 @@ public class SpaceShooter extends YaegerGame {
     @Override
     public void setupScenes() {
         var startSceneFont = new CustomFont("fonts/RobotoMono-Medium.ttf", 50);
-        addScene(0, new StartScene(startSceneFont, this));
+//        addScene(0, new StartScene(startSceneFont, this));
         addScene(1, new GameScene());
     }
 }

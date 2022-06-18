@@ -18,13 +18,14 @@ public class Projectile extends DynamicSpriteEntity implements SceneBorderCrossi
 
     @Override
     public void notifyBoundaryCrossing(SceneBorder sceneBorder) {
-        if (SceneBorder.RIGHT.equals(sceneBorder)) {
+        if (SceneBorder.RIGHT.equals(sceneBorder) || SceneBorder.LEFT.equals(sceneBorder)) {
             remove();
         }
     }
 
     /**
      * TODO: handle collisions
+     *
      * @param collider
      */
     @Override
