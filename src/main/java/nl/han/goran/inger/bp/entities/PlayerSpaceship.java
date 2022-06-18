@@ -35,7 +35,7 @@ public class PlayerSpaceship extends DynamicSpriteEntity implements KeyListener,
         this.livesText = livesText;
         this.livesText.setLivesText(this.playerLives);
 
-        setSpeed(this.playerSpeed);
+//        setSpeed(this.playerSpeed);
     }
 
     public int getPlayerSpeed() {
@@ -54,37 +54,42 @@ public class PlayerSpaceship extends DynamicSpriteEntity implements KeyListener,
 
         var speed = this.getPlayerSpeed();
 
+        final double RIGHT_UP = 135d;
+        final double RIGHT_DOWN = 45d;
+        final double LEFT_UP = 225d;
+        final double LEFT_DOWN = 315d;
+
 //        setSpeed(speed);
 
         if (set.contains(KeyCode.SPACE)) {
             gameScene.addEntity(new Projectile(getAnchorLocation(), getPlayerSpeed()));
-            setCurrentFrameIndex(3);
-            setSpeed(0);
+//            setCurrentFrameIndex(3);
+//            setSpeed(0);
         }
 
         if (set.contains(KeyCode.RIGHT) && set.contains(KeyCode.UP)) {
-            setMotion(speed, 135d);
+            setMotion(speed, RIGHT_UP);
             if (set.contains(KeyCode.SPACE)) {
                 setCurrentFrameIndex(5);
             } else {
                 setCurrentFrameIndex(2);
             }
         } else if (set.contains(KeyCode.RIGHT) && set.contains(KeyCode.DOWN)) {
-            setMotion(speed, 45d);
+            setMotion(speed, RIGHT_DOWN);
             if (set.contains(KeyCode.SPACE)) {
                 setCurrentFrameIndex(4);
             } else {
                 setCurrentFrameIndex(1);
             }
         } else if (set.contains(KeyCode.LEFT) && set.contains(KeyCode.UP)) {
-            setMotion(speed, 225d);
+            setMotion(speed, LEFT_UP);
             if (set.contains(KeyCode.SPACE)) {
                 setCurrentFrameIndex(5);
             } else {
                 setCurrentFrameIndex(2);
             }
         } else if (set.contains(KeyCode.LEFT) && set.contains(KeyCode.DOWN)) {
-            setMotion(speed, 315d);
+            setMotion(speed, LEFT_DOWN);
             if (set.contains(KeyCode.SPACE)) {
                 setCurrentFrameIndex(4);
             } else {
