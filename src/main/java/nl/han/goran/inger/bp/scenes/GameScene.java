@@ -4,7 +4,9 @@ import com.github.hanyaeger.api.Coordinate2D;
 import com.github.hanyaeger.api.EntitySpawnerContainer;
 import com.github.hanyaeger.api.entities.YaegerEntity;
 import com.github.hanyaeger.api.scenes.DynamicScene;
+import nl.han.goran.inger.bp.entities.Asteroid;
 import nl.han.goran.inger.bp.entities.PlayerSpaceship;
+import nl.han.goran.inger.bp.entities.spawner.AsteroidSpawner;
 import nl.han.goran.inger.bp.entities.spawner.PowerUpSpawner;
 import nl.han.goran.inger.bp.entities.text.LivesText;
 
@@ -17,7 +19,9 @@ public class GameScene extends DynamicScene implements EntitySpawnerContainer {
 
     public void setupEntities() {
         var livesText = new LivesText(new Coordinate2D(0, 0));
-        var playerSpaceship = new PlayerSpaceship(new Coordinate2D(0, getHeight() / 2), this, this.playerLives, livesText);
+        var playerSpaceship = new PlayerSpaceship(new Coordinate2D(0, getHeight() / 2), this, livesText);
+//        var asteroid = new Asteroid(new Coordinate2D(getWidth() / 2, getHeight() / 2), this);
+//        addEntity(asteroid);
         addEntity(playerSpaceship);
         addEntity(livesText);
     }
@@ -47,6 +51,8 @@ public class GameScene extends DynamicScene implements EntitySpawnerContainer {
         var sceneWidth = getWidth();
         var sceneHeight = getHeight();
         var powerUpSpawner = new PowerUpSpawner(sceneWidth, sceneHeight);
+        var asteroidSpawner = new AsteroidSpawner(this);
         addEntitySpawner(powerUpSpawner);
+        addEntitySpawner(asteroidSpawner);
     }
 }

@@ -10,4 +10,5 @@ module bp.ogp {
     opens player;
     opens flash;
     opens shoot;
+    opens explosion;
 }

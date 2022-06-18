@@ -19,23 +19,19 @@ public class PlayerSpaceship extends DynamicSpriteEntity implements KeyListener,
     //    TODO: gebruik de andere player sprites wanneer het ship omhoog of omlaag gaat.
     //    FIXME: er is een bug als de volgende toetsen worden ingedrukt: space + up + left
     final GameScene gameScene;
-    private int playerLives;
     private LivesText livesText;
 
     private int playerSpeed = 7;
 
-    public PlayerSpaceship(Coordinate2D initialLocation, GameScene gameScene, int playerLives, LivesText livesText) {
+    public PlayerSpaceship(Coordinate2D initialLocation, GameScene gameScene, LivesText livesText) {
         // de resource en size in deze class en de StartScreenPlayer class zijn hetzelfde...
         // overerving gebruiken?
         super("player/player_sprite_sheet.png", initialLocation, new Size(74, 42), 1, 6);
         this.gameScene = gameScene;
 
-        this.playerLives = playerLives;
 
         this.livesText = livesText;
-        this.livesText.setLivesText(this.playerLives);
-
-//        setSpeed(this.playerSpeed);
+        this.livesText.setLivesText(gameScene.getPlayerLives());
     }
 
     public int getPlayerSpeed() {
@@ -147,6 +143,18 @@ public class PlayerSpaceship extends DynamicSpriteEntity implements KeyListener,
 
         if (collider instanceof SpeedUp) {
             setPlayerSpeed(getPlayerSpeed() + 2);
+        }
+
+        if (collider instanceof Asteroid) {
+            var newPlayerLives = gameScene.getPlayerLives() - 2;
+            gameScene.setPlayerLives(newPlayerLives);
+            livesText.setLivesText(newPlayerLives);
+        }
+
+        if (collider instanceof SmallAsteroid) {
+            var newPlayerLives = gameScene.getPlayerLives() - 1;
+            gameScene.setPlayerLives(newPlayerLives);
+            livesText.setLivesText(newPlayerLives);
         }
     }
 }

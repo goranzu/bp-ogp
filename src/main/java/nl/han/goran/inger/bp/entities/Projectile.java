@@ -30,6 +30,8 @@ public class Projectile extends DynamicSpriteEntity implements SceneBorderCrossi
      */
     @Override
     public void onCollision(Collider collider) {
-
+        if (collider instanceof Asteroid || collider instanceof SmallAsteroid) {
+            remove();
+        }
     }
 }
