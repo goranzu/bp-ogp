@@ -156,5 +156,11 @@ public class PlayerSpaceship extends DynamicSpriteEntity implements KeyListener,
             gameScene.setPlayerLives(newPlayerLives);
             livesText.setLivesText(newPlayerLives);
         }
+
+        if (collider instanceof Asteroid || collider instanceof SmallAsteroid) {
+            if (gameScene.getPlayerLives() < 1) {
+                gameScene.handleEndGame();
+            }
+        }
     }
 }
