@@ -6,8 +6,10 @@ import com.github.hanyaeger.api.entities.*;
 import com.github.hanyaeger.api.entities.impl.DynamicSpriteEntity;
 import com.github.hanyaeger.api.scenes.SceneBorder;
 
-import java.util.Random;
-
+/**
+ * Basis voor Asteroid en SmallAsteroid klassen,
+ * Hier wordt de collision, boundary functionaliteit bepaalt.
+ */
 public abstract class DestroyableObject extends DynamicSpriteEntity implements Collided, Collider, SceneBorderTouchingWatcher, SceneBorderCrossingWatcher {
     protected DestroyableObject(String resource, Coordinate2D initialLocation, Size size) {
         super(resource, initialLocation, size);

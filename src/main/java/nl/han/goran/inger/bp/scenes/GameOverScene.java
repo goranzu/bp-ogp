@@ -2,7 +2,6 @@ package nl.han.goran.inger.bp.scenes;
 
 import com.github.hanyaeger.api.AnchorPoint;
 import com.github.hanyaeger.api.Coordinate2D;
-import com.github.hanyaeger.api.Size;
 import com.github.hanyaeger.api.entities.impl.CustomFont;
 import com.github.hanyaeger.api.entities.impl.TextEntity;
 import com.github.hanyaeger.api.scenes.DynamicScene;

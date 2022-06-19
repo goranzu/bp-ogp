@@ -12,8 +12,8 @@ import nl.han.goran.inger.bp.entities.text.PointsText;
 import nl.han.goran.inger.bp.scenes.GameScene;
 
 public class Projectile extends DynamicSpriteEntity implements SceneBorderCrossingWatcher, Collided, Collider {
-    GameScene gameScene;
-    PointsText pointsText;
+    private GameScene gameScene;
+    private PointsText pointsText;
 
     public Projectile(Coordinate2D initialLocation, int speed, GameScene gameScene, PointsText pointsText) {
         super("shoot/shoot1.png", initialLocation, new Size(28, 28));
