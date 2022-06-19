@@ -2,10 +2,7 @@ package nl.han.goran.inger.bp.entities;
 
 import com.github.hanyaeger.api.Coordinate2D;
 import com.github.hanyaeger.api.Size;
-import com.github.hanyaeger.api.entities.Collided;
-import com.github.hanyaeger.api.entities.Collider;
-import com.github.hanyaeger.api.entities.SceneBorderCrossingWatcher;
-import com.github.hanyaeger.api.entities.SceneBorderTouchingWatcher;
+import com.github.hanyaeger.api.entities.*;
 import com.github.hanyaeger.api.entities.impl.DynamicSpriteEntity;
 import com.github.hanyaeger.api.scenes.SceneBorder;
 
@@ -31,12 +28,23 @@ public abstract class DestroyableObject extends DynamicSpriteEntity implements C
 
     @Override
     public void notifyBoundaryTouching(SceneBorder sceneBorder) {
-        // handle border touching
-        changeDirection(new Random().nextDouble(385d));
+        if (SceneBorder.TOP.equals(sceneBorder)) {
+            changeDirection(Direction.DOWN.getValue() + 50d);
+        }
+
+        if (SceneBorder.BOTTOM.equals(sceneBorder)) {
+            changeDirection(Direction.UP.getValue() + 50d);
+        }
+
+        if (SceneBorder.RIGHT.equals(sceneBorder)) {
+            changeDirection(Direction.LEFT.getValue() + 50d);
+        }
     }
 
     @Override
     public void notifyBoundaryCrossing(SceneBorder sceneBorder) {
-        remove();
+        if (SceneBorder.LEFT.equals(sceneBorder)) {
+            remove();
+        }
     }
 }

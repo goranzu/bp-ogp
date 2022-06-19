@@ -11,7 +11,7 @@ public class AsteroidSpawner extends EntitySpawner {
     GameScene gameScene;
 
     public AsteroidSpawner(GameScene gameScene) {
-        super(1000 * 5);
+        super(1000 * 10);
 
         this.gameScene = gameScene;
     }

@@ -10,6 +10,7 @@ import com.github.hanyaeger.api.userinput.KeyListener;
 import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
 import nl.han.goran.inger.bp.SpaceShooter;
+import nl.han.goran.inger.bp.entities.text.PointsText;
 
 import java.util.Set;
 
@@ -39,6 +40,7 @@ public class GameOverScene extends DynamicScene implements KeyListener {
         var textLocation = new Coordinate2D(xCenter, yCenter);
         var gameOverText = new TextEntity(textLocation, "Game Over");
         var startAgainText = new TextEntity(new Coordinate2D(xCenter, startAgainYText), "Press enter to play again");
+        var pointsText = new PointsText(new Coordinate2D(xCenter, xCenter - 100));
 
         gameOverText.setAnchorPoint(AnchorPoint.CENTER_CENTER);
         gameOverText.setFill(Color.WHITE);

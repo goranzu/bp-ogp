@@ -1,5 +1,6 @@
 package nl.han.goran.inger.bp.scenes;
 
+import com.github.hanyaeger.api.AnchorPoint;
 import com.github.hanyaeger.api.Coordinate2D;
 import com.github.hanyaeger.api.EntitySpawnerContainer;
 import com.github.hanyaeger.api.entities.YaegerEntity;
@@ -10,9 +11,11 @@ import nl.han.goran.inger.bp.entities.PlayerSpaceship;
 import nl.han.goran.inger.bp.entities.spawner.AsteroidSpawner;
 import nl.han.goran.inger.bp.entities.spawner.PowerUpSpawner;
 import nl.han.goran.inger.bp.entities.text.LivesText;
+import nl.han.goran.inger.bp.entities.text.PointsText;
 
 public class GameScene extends DynamicScene implements EntitySpawnerContainer {
-    protected int playerLives = 1;
+    private int playerLives = 1;
+
     private SpaceShooter spaceShooter;
 
     public GameScene(SpaceShooter spaceShooter) {
@@ -25,9 +28,13 @@ public class GameScene extends DynamicScene implements EntitySpawnerContainer {
 
     public void setupEntities() {
         var livesText = new LivesText(new Coordinate2D(0, 0));
+        var pointsText = new PointsText(new Coordinate2D(getWidth() / 2, 0));
         var playerSpaceship = new PlayerSpaceship(new Coordinate2D(0, getHeight() / 2), this, livesText);
+        pointsText.setAnchorPoint(AnchorPoint.TOP_CENTER);
+
         addEntity(playerSpaceship);
         addEntity(livesText);
+        addEntity(pointsText);
     }
 
     /**
