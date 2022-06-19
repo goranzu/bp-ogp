@@ -18,6 +18,5 @@ public class SmallAsteroid extends DestroyableObject {
         if (this.hitPoints < 1) {
             remove();
         }
-
     }
 }

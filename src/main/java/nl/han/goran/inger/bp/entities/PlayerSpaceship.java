@@ -17,17 +17,13 @@ import nl.han.goran.inger.bp.scenes.GameScene;
 import java.util.Set;
 
 public class PlayerSpaceship extends DynamicSpriteEntity implements KeyListener, SceneBorderCrossingWatcher, Collider, Collided {
-    //    TODO: gebruik de andere player sprites wanneer het ship omhoog of omlaag gaat.
-    //    FIXME: er is een bug als de volgende toetsen worden ingedrukt: space + up + left
-    final GameScene gameScene;
+    private final GameScene gameScene;
     private LivesText livesText;
     private PointsText pointsText;
 
     private int playerSpeed = 7;
 
     public PlayerSpaceship(Coordinate2D initialLocation, GameScene gameScene, LivesText livesText, PointsText pointsText) {
-        // de resource en size in deze class en de StartScreenPlayer class zijn hetzelfde...
-        // overerving gebruiken?
         super("player/player_sprite_sheet.png", initialLocation, new Size(74, 42), 1, 6);
         this.gameScene = gameScene;
 
@@ -54,12 +50,9 @@ public class PlayerSpaceship extends DynamicSpriteEntity implements KeyListener,
         final double LEFT_UP = 225d;
         final double LEFT_DOWN = 315d;
 
-//        setSpeed(speed);
 
         if (set.contains(KeyCode.SPACE)) {
             gameScene.addEntity(new Projectile(getAnchorLocation(), getPlayerSpeed(), gameScene, pointsText));
-//            setCurrentFrameIndex(3);
-//            setSpeed(0);
         }
 
         if (set.contains(KeyCode.RIGHT) && set.contains(KeyCode.UP)) {
@@ -127,7 +120,6 @@ public class PlayerSpaceship extends DynamicSpriteEntity implements KeyListener,
     @Override
     public void notifyBoundaryCrossing(SceneBorder sceneBorder) {
         switch (sceneBorder) {
-//            case TOP -> setAnchorLocationY(1);
             case TOP -> changeDirection(90);
             case BOTTOM -> setAnchorLocationY(getSceneHeight() - getHeight() - 1);
             case LEFT -> setAnchorLocationX(1);

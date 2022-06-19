@@ -7,6 +7,13 @@ import nl.han.goran.inger.bp.entities.SpeedUp;
 
 import java.util.Random;
 
+
+/**
+ * Klasse voor het spawnen van power ups.
+ * Met een interval van 5 seconden.
+ *
+ * @author Goran Tenic
+ */
 public class PowerUpSpawner extends EntitySpawner {
     private final double sceneWidth;
     private final double sceneHeight;
@@ -17,6 +24,10 @@ public class PowerUpSpawner extends EntitySpawner {
         this.sceneHeight = sceneHeight;
     }
 
+
+    /**
+     * Methode die om de 5 seconden wordt aangeroepen om nieuwe entities te spawnen.
+     */
     @Override
     protected void spawnEntities() {
         var radius = 40;

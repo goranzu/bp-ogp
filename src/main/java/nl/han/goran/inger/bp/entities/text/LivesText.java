@@ -5,12 +5,10 @@ import com.github.hanyaeger.api.entities.impl.CustomFont;
 import com.github.hanyaeger.api.entities.impl.TextEntity;
 import javafx.scene.paint.Color;
 
-/*
-deze class wordt toegevoegd in de gameScene class
-met de addEntities methode.
-De speler class krijgt ook een instance van deze class
-om de het aantal levens te verhogen of verlagen,
-afhankelijk of een power up is geraakt of een komeet/vijand
+/**
+ * Toont het aantal levens op het scherm
+ *
+ * @author Goran Tenic
  */
 public class LivesText extends TextEntity {
     public LivesText(Coordinate2D initialLocation) {
@@ -19,6 +17,11 @@ public class LivesText extends TextEntity {
         setFill(Color.WHITE);
     }
 
+    /**
+     * Update de tekst met het aantal levens.
+     *
+     * @param lives
+     */
     public void setLivesText(int lives) {
         setText("Lives: " + lives);
     }

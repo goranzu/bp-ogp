@@ -8,8 +8,8 @@ import nl.han.goran.inger.bp.scenes.GameScene;
 import java.util.Random;
 
 public class Asteroid extends DestroyableObject {
-    int hitPoints = 5;
-    GameScene gameScene;
+    private int hitPoints = 5;
+    private GameScene gameScene;
 
     public Asteroid(Coordinate2D initialLocation, GameScene gameScene) {
         super("asteroids/asteroid.png", initialLocation, new Size(90));
@@ -19,6 +19,10 @@ public class Asteroid extends DestroyableObject {
         setMotion(1, Direction.LEFT.getValue() + new Random().nextDouble(100d));
     }
 
+    /**
+     * Als de hitpoints op 0 komen worden er 4 kleinere kometen op speelveld geplaatst.
+     * Hiervoor wordt gameScene.addEntity() gebruikt.
+     */
     @Override
     public void handleCollison() {
         hitPoints--;
