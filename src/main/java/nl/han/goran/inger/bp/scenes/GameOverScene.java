@@ -40,7 +40,7 @@ public class GameOverScene extends DynamicScene implements KeyListener {
         var textLocation = new Coordinate2D(xCenter, yCenter);
         var gameOverText = new TextEntity(textLocation, "Game Over");
         var startAgainText = new TextEntity(new Coordinate2D(xCenter, startAgainYText), "Press enter to play again");
-        var pointsText = new PointsText(new Coordinate2D(xCenter, xCenter - 100));
+        var pointsText = new PointsText(new Coordinate2D(xCenter, xCenter - 100), new GameScene(this.spaceShooter));
 
         gameOverText.setAnchorPoint(AnchorPoint.CENTER_CENTER);
         gameOverText.setFill(Color.WHITE);
@@ -57,6 +57,8 @@ public class GameOverScene extends DynamicScene implements KeyListener {
     @Override
     public void onPressedKeysChange(Set<KeyCode> set) {
         if (set.contains(KeyCode.ENTER)) {
+            spaceShooter.setLives(3);
+            spaceShooter.setGamePoints(0);
             spaceShooter.setActiveScene(1);
         }
     }

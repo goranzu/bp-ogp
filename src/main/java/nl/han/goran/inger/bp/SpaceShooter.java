@@ -10,6 +10,8 @@ import nl.han.goran.inger.bp.scenes.StartScene;
 public class SpaceShooter extends YaegerGame {
     private int gamePoints = 0;
 
+    private int lives = 3;
+
     public static void main(String[] args) {
         launch(args);
     }
@@ -34,5 +36,13 @@ public class SpaceShooter extends YaegerGame {
 
     public void setGamePoints(int gamePoints) {
         this.gamePoints = gamePoints;
+    }
+
+    public int getLives() {
+        return lives;
+    }
+
+    public void setLives(int lives) {
+        this.lives = lives;
     }
 }

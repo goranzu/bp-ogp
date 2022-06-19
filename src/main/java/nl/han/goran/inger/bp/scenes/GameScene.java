@@ -6,16 +6,14 @@ import com.github.hanyaeger.api.EntitySpawnerContainer;
 import com.github.hanyaeger.api.entities.YaegerEntity;
 import com.github.hanyaeger.api.scenes.DynamicScene;
 import nl.han.goran.inger.bp.SpaceShooter;
-import nl.han.goran.inger.bp.entities.Asteroid;
 import nl.han.goran.inger.bp.entities.PlayerSpaceship;
 import nl.han.goran.inger.bp.entities.spawner.AsteroidSpawner;
+import nl.han.goran.inger.bp.entities.spawner.EnemySpawner;
 import nl.han.goran.inger.bp.entities.spawner.PowerUpSpawner;
 import nl.han.goran.inger.bp.entities.text.LivesText;
 import nl.han.goran.inger.bp.entities.text.PointsText;
 
 public class GameScene extends DynamicScene implements EntitySpawnerContainer {
-    private int playerLives = 1;
-
     private SpaceShooter spaceShooter;
 
     public GameScene(SpaceShooter spaceShooter) {
@@ -28,8 +26,8 @@ public class GameScene extends DynamicScene implements EntitySpawnerContainer {
 
     public void setupEntities() {
         var livesText = new LivesText(new Coordinate2D(0, 0));
-        var pointsText = new PointsText(new Coordinate2D(getWidth() / 2, 0));
-        var playerSpaceship = new PlayerSpaceship(new Coordinate2D(0, getHeight() / 2), this, livesText);
+        var pointsText = new PointsText(new Coordinate2D(getWidth() / 2, 0), this);
+        var playerSpaceship = new PlayerSpaceship(new Coordinate2D(0, getHeight() / 2), this, livesText, pointsText);
         pointsText.setAnchorPoint(AnchorPoint.TOP_CENTER);
 
         addEntity(playerSpaceship);
@@ -48,14 +46,6 @@ public class GameScene extends DynamicScene implements EntitySpawnerContainer {
         super.addEntity(yaegerEntity);
     }
 
-    public int getPlayerLives() {
-        return this.playerLives;
-    }
-
-    public void setPlayerLives(int playerLives) {
-        this.playerLives = playerLives;
-    }
-
     public void handleEndGame() {
         spaceShooter.setActiveScene(2);
     }
@@ -67,7 +57,14 @@ public class GameScene extends DynamicScene implements EntitySpawnerContainer {
         var sceneHeight = getHeight();
         var powerUpSpawner = new PowerUpSpawner(sceneWidth, sceneHeight);
         var asteroidSpawner = new AsteroidSpawner(this);
+        var enemySpawner = new EnemySpawner(this);
+
         addEntitySpawner(powerUpSpawner);
         addEntitySpawner(asteroidSpawner);
+        addEntitySpawner(enemySpawner);
+    }
+
+    public SpaceShooter getSpaceShooter() {
+        return spaceShooter;
     }
 }

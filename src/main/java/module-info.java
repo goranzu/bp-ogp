@@ -11,4 +11,5 @@ module bp.ogp {
     opens flash;
     opens shoot;
     opens explosion;
+    opens enemy;
 }

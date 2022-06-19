@@ -11,6 +11,7 @@ import com.github.hanyaeger.api.scenes.SceneBorder;
 import com.github.hanyaeger.api.userinput.KeyListener;
 import javafx.scene.input.KeyCode;
 import nl.han.goran.inger.bp.entities.text.LivesText;
+import nl.han.goran.inger.bp.entities.text.PointsText;
 import nl.han.goran.inger.bp.scenes.GameScene;
 
 import java.util.Set;
@@ -20,18 +21,19 @@ public class PlayerSpaceship extends DynamicSpriteEntity implements KeyListener,
     //    FIXME: er is een bug als de volgende toetsen worden ingedrukt: space + up + left
     final GameScene gameScene;
     private LivesText livesText;
+    private PointsText pointsText;
 
     private int playerSpeed = 7;
 
-    public PlayerSpaceship(Coordinate2D initialLocation, GameScene gameScene, LivesText livesText) {
+    public PlayerSpaceship(Coordinate2D initialLocation, GameScene gameScene, LivesText livesText, PointsText pointsText) {
         // de resource en size in deze class en de StartScreenPlayer class zijn hetzelfde...
         // overerving gebruiken?
         super("player/player_sprite_sheet.png", initialLocation, new Size(74, 42), 1, 6);
         this.gameScene = gameScene;
 
-
+        this.pointsText = pointsText;
         this.livesText = livesText;
-        this.livesText.setLivesText(gameScene.getPlayerLives());
+        this.livesText.setLivesText(gameScene.getSpaceShooter().getLives());
     }
 
     public int getPlayerSpeed() {
@@ -55,7 +57,7 @@ public class PlayerSpaceship extends DynamicSpriteEntity implements KeyListener,
 //        setSpeed(speed);
 
         if (set.contains(KeyCode.SPACE)) {
-            gameScene.addEntity(new Projectile(getAnchorLocation(), getPlayerSpeed()));
+            gameScene.addEntity(new Projectile(getAnchorLocation(), getPlayerSpeed(), gameScene, pointsText));
 //            setCurrentFrameIndex(3);
 //            setSpeed(0);
         }
@@ -136,8 +138,8 @@ public class PlayerSpaceship extends DynamicSpriteEntity implements KeyListener,
     @Override
     public void onCollision(Collider collider) {
         if (collider instanceof LifeUp) {
-            var newPlayerLives = gameScene.getPlayerLives() + 1;
-            gameScene.setPlayerLives(newPlayerLives);
+            var newPlayerLives = gameScene.getSpaceShooter().getLives() + 1;
+            gameScene.getSpaceShooter().setLives(newPlayerLives);
             livesText.setLivesText(newPlayerLives);
         }
 
@@ -146,19 +148,19 @@ public class PlayerSpaceship extends DynamicSpriteEntity implements KeyListener,
         }
 
         if (collider instanceof Asteroid) {
-            var newPlayerLives = gameScene.getPlayerLives() - 2;
-            gameScene.setPlayerLives(newPlayerLives);
+            var newPlayerLives = gameScene.getSpaceShooter().getLives() - 2;
+            gameScene.getSpaceShooter().setLives(newPlayerLives);
             livesText.setLivesText(newPlayerLives);
         }
 
-        if (collider instanceof SmallAsteroid) {
-            var newPlayerLives = gameScene.getPlayerLives() - 1;
-            gameScene.setPlayerLives(newPlayerLives);
+        if (collider instanceof SmallAsteroid || collider instanceof Enemy) {
+            var newPlayerLives = gameScene.getSpaceShooter().getLives() - 1;
+            gameScene.getSpaceShooter().setLives(newPlayerLives);
             livesText.setLivesText(newPlayerLives);
         }
 
-        if (collider instanceof Asteroid || collider instanceof SmallAsteroid) {
-            if (gameScene.getPlayerLives() < 1) {
+        if (collider instanceof Asteroid || collider instanceof SmallAsteroid || collider instanceof Enemy) {
+            if (gameScene.getSpaceShooter().getLives() < 1) {
                 gameScene.handleEndGame();
             }
         }
